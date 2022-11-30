@@ -22,7 +22,7 @@
                                     <span>Manage Suppliers</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{{ route('suppliers.index') }}">All Supplier</a></li>
+                                    <li><a href="{{ route('supplier.index') }}">All Supplier</a></li>
                                 </ul>
                             </li>
 

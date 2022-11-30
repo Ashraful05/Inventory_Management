@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
+use App\Models\Supplier;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
@@ -14,7 +17,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::latest()->get();
+        return view('admin.supplier.index',compact('suppliers'));
     }
 
     /**
@@ -22,9 +26,9 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Supplier $supplier)
     {
-        //
+        return view('admin.supplier.add_edit_supplier',compact('supplier'));
     }
 
     /**
@@ -35,7 +39,23 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+           'name'=>'required|string|max:150',
+           'mobile_no'=>'required|unique:suppliers',
+        ]);
+        Supplier::insert([
+            'name'=>$request->name,
+            'mobile_no'=>$request->mobile_no,
+            'email'=>$request->email,
+            'address'=>$request->address,
+            'created_by'=>Auth::user()->id,
+            'created_at'=>Carbon::now(),
+        ]);
+        $notification = [
+          'alert-type'=>'success',
+          'message'=>'Supplier Info Saved!!'
+        ];
+        return redirect()->route('supplier.index')->with($notification);
     }
 
     /**
@@ -55,9 +75,9 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Supplier $supplier)
     {
-        //
+        return view('admin.supplier.add_edit_supplier',compact('supplier'));
     }
 
     /**
@@ -67,9 +87,24 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Supplier $supplier)
     {
-        //
+//        $request->validate([
+//            'name'=>'required|string|max:150',
+//            'mobile_no'=>'required|unique:suppliers',
+//        ]);
+        $supplier->update([
+            'name'=>$request->name,
+            'mobile_no'=>$request->mobile_no,
+            'email'=>$request->email,
+            'address'=>$request->address,
+            'updated_by'=>Auth::user()->id,
+        ]);
+        $notification = [
+            'alert-type'=>'info',
+            'message'=>'Supplier Info Updated!!'
+        ];
+        return redirect()->route('supplier.index')->with($notification);
     }
 
     /**
@@ -78,8 +113,13 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+        $notification=[
+            'alert-type'=>'error',
+            'message'=>'Supplier Info Deleted!!'
+        ];
+        return redirect()->back()->with($notification);
     }
 }

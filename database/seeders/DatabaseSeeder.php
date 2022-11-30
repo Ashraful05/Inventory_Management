@@ -12,8 +12,12 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    use WithoutModelEvents;
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call([
+           SupplierSeeder::class,
+        ]);
     }
 }
