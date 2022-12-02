@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Demo\DemoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\POS\SupplierController;
+use App\Http\Controllers\POS\CustomerController;
 
 
 Route::get('/', function () {
@@ -30,7 +31,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     });
     Route::resource('supplier',SupplierController::class);
-
+    Route::resource('customer',CustomerController::class);
 });
 
 
