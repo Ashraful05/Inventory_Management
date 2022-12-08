@@ -7,6 +7,7 @@ use App\Http\Controllers\POS\SupplierController;
 use App\Http\Controllers\POS\CustomerController;
 use App\Http\Controllers\POS\UnitController;
 use App\Http\Controllers\POS\CategoryController;
+use App\Http\Controllers\POS\ProductController;
 
 
 Route::get('/', function () {
@@ -36,6 +37,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('customer',CustomerController::class);
     Route::resource('unit',UnitController::class);
     Route::resource('category',CategoryController::class);
+    Route::resource('product',ProductController::class);
 });
 
 
