@@ -8,6 +8,8 @@ use App\Http\Controllers\POS\CustomerController;
 use App\Http\Controllers\POS\UnitController;
 use App\Http\Controllers\POS\CategoryController;
 use App\Http\Controllers\POS\ProductController;
+use App\Http\Controllers\POS\PurchaseController;
+use App\Http\Controllers\POS\DefaultController;
 
 
 Route::get('/', function () {
@@ -38,6 +40,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('unit',UnitController::class);
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
+    Route::resource('purchase',PurchaseController::class);
+
+    //Default Controller route....
+    Route::get('category_data/ajax',[DefaultController::class,'getCategoryDataByAjax'])->name('get_category');
+    Route::get('product_data/ajax',[DefaultController::class,'getProductDataByAjax'])->name('get_product');
 });
 
 

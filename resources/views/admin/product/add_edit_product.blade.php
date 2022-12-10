@@ -17,7 +17,7 @@
                             @if($product->exists)
                                 <h4 class="card-title text-center">Edit Product Data</h4>
                             @else
-                                <h4 class="card-title text-center">Add Category Data</h4>
+                                <h4 class="card-title text-center">Add Product Data</h4>
                             @endif
                         </div>
                         <div class="card-body">
