@@ -33,14 +33,16 @@
                                                 <div class="col-md-4">
                                                     <div class="md-3">
                                                         <label for="example-text-input" class="form-label">Date</label>
-                                                        <input class="form-control example-date-input" name="date" value="{{ old('date',$purchase->date) }}" type="date"  id="date">
+                                                        <input class="form-control example-date-input" name="date"
+                                                               value="{{ old('date',$purchase->date) }}" type="date"  id="date">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="md-3">
                                                         <label for="example-text-input" class="form-label">Purchase No</label>
-                                                        <input class="form-control example-date-input" name="purchase_no" value="{{ old('purchase_no',$purchase->purchase_no) }}" type="text"  id="purchase_no">
+                                                        <input class="form-control example-date-input" name="purchase_no"
+                                                               value="{{ old('purchase_no',$purchase->purchase_no) }}" type="text" id="purchase_no">
                                                     </div>
                                                 </div>
 
@@ -82,24 +84,128 @@
                                                 <div class="col-md-4 mb-3">
                                                     <div class="md-3">
                                                         <label for="example-text-input" class="form-label" style="margin-top:43px;">  </label>
-                                                        <input type="submit" class="btn btn-secondary btn-rounded waves-effect waves-light" value="Add More">
+                                                        <i class="addeventmore btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle"> Add More</i>
                                                     </div>
                                                 </div>
                                             </div> <!-- // end row  -->
-                                            @if($purchase->exists)
-                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Update Purchase</button>
-                                            @else
-                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Add Purchase</button>
-                                            @endif
+{{--                                            @if($purchase->exists)--}}
+{{--                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Update Purchase</button>--}}
+{{--                                            @else--}}
+{{--                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Add Purchase</button>--}}
+{{--                                            @endif--}}
 
                                         </form>
                                 </form>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post">
+                                @csrf
+                                <table class="table-sm table-bordered mb-3" width="100%" style="border-color: #ddd;">
+                                    <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Product Name</th>
+                                        <th>PSC/KG</th>
+                                        <th>Unit Price</th>
+                                        <th>Description</th>
+                                        <th>Total Price</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="addRow" class="addRow">
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td>
+                                            <input type="text" name="estimated_amount" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-info" id="storeButton">Purchase Store</button>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script type="text/x-handlebars-template" id="document-template">
+        <tr class="delete_add_more_item" id="delete_add_more_item">
+            <input type="hidden" name="date[]" value="@{{ date }}">
+            <input type="hidden" name="purchase_no[]" value="@{{ purchase_no }}">
+            <input type="hidden" name="supplier_id[]" value="@{{ supplier_id }}">
+            <td>
+                <input type="hidden" name="category_id[]" value="@{{ category_id }}">
+                @{{ category_name }}
+            </td>
+            <td>
+                <input type="hidden" name="product_id[]" value="@{{ product_id }}">
+                @{{ product_name }}
+            </td>
+            <td>
+                <input type="number" min="1" class="form-control buying_quantity text-right" name="buying_quantity[]" value="">
+            </td>
+            <td>
+                <input type="number" min="1" class="form-control unit_price text-right" name="unit_price[]" value="">
+            </td>
+            <td>
+                <input type="text" class="form-control" name="description[]">
+            </td>
+            <td>
+                <input type="number" class="form-control buying_price text-right" name="buying_price" value="0" readonly>
+            </td>
+            <td>
+                <i class="btn btn-danger btn-sm fas fa-window-close removeeventmore"></i>
+            </td>
+        </tr>
+    </script>
+
+    <script>
+        $(document).ready(function(){
+           $(document).on('click','.addeventmore',function(){
+                var date = $("#date").val();
+                var purchase_no = $("#purchase_no").val();
+                var supplier_id = $("#supplier_id").val();
+                var supplier_name = $("#supplier_id").find('option:selected').text();
+                var category_id = $("#category_id").val();
+                var category_name = $("#category_id").find('option:selected').text();
+                var product_id = $("#product_id").val();
+                var product_name = $("#product_id").find('option:selected').text();
+
+                if(date == ''){
+                    $.notify("Date is required",{globalPosition:'top-right', className:'error'});
+                    return false;
+                }
+                if(purchase_no == ''){
+                    $.notify("Purchase No. is required",{globalPosition:'top-right',className: 'error'});
+                    return false;
+                }
+                if(supplier_id == ''){
+                    $.notify("Supplier is required",{globalPosition:'top-right',className:'error'});
+                    return false;
+                }
+                if(category_id == ''){
+                    $.notify("Category is required",{globalPosition:'top-right',className:'error'});
+                    return false;
+                }
+                if(product_id == ''){
+                    $.notify("Product is required",{globalPosition:'top-right',className:'error'});
+                    return false;
+                }
+
+                var source = $("document-template").html();
+                var template = Handlebars.compile(source);
+           });
+        });
+    </script>
+
+
 
     <script>
         $(function(){

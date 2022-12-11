@@ -130,6 +130,8 @@
 </script>
 
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
+<script src="{{ asset('backend/assets/js/handlebars.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
 
     </body>
 
