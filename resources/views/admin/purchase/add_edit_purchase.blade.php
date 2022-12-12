@@ -88,47 +88,72 @@
                                                     </div>
                                                 </div>
                                             </div> <!-- // end row  -->
-{{--                                            @if($purchase->exists)--}}
-{{--                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Update Purchase</button>--}}
-{{--                                            @else--}}
-{{--                                                <button type="submit" class="btn btn-info waves-effect waves-light form-control">Add Purchase</button>--}}
-{{--                                            @endif--}}
+                                            <table class="table-sm table-bordered mb-3" width="100%" style="border-color: #ddd;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Product Name</th>
+                                                    <th>PSC/KG</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Description</th>
+                                                    <th>Total Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="addRow" class="addRow">
+                                                <tr>
+                                                    <td colspan="5"></td>
+                                                    <td>
+                                                        <input type="text" name="estimated_amount" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+                                            <div class="form-group">
+                                                @if($purchase->exists)
+                                                    <button type="submit" class="btn btn-info" id="updateButton">Purchase Update</button>
+                                                @else
+                                                    <button type="submit" class="btn btn-info" id="storeButton">Purchase Store</button>
+                                                @endif
+                                            </div>
 
                                         </form>
                                 </form>
                         </div>
-                        <div class="card-body">
-                            <form action="" method="post">
-                                @csrf
-                                <table class="table-sm table-bordered mb-3" width="100%" style="border-color: #ddd;">
-                                    <thead>
-                                    <tr>
-                                        <th>Category</th>
-                                        <th>Product Name</th>
-                                        <th>PSC/KG</th>
-                                        <th>Unit Price</th>
-                                        <th>Description</th>
-                                        <th>Total Price</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="addRow" class="addRow">
-                                    <tr>
-                                        <td colspan="5"></td>
-                                        <td>
-                                            <input type="text" name="estimated_amount" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
+                        {{--                        <div class="card-body">--}}
+                        {{--                            <form action="{{ route('purchase.store') }}" method="post">--}}
+                        {{--                                @csrf--}}
+                        {{--                                <table class="table-sm table-bordered mb-3" width="100%" style="border-color: #ddd;">--}}
+                        {{--                                    <thead>--}}
+                        {{--                                    <tr>--}}
+                        {{--                                        <th>Category</th>--}}
+                        {{--                                        <th>Product Name</th>--}}
+                        {{--                                        <th>PSC/KG</th>--}}
+                        {{--                                        <th>Unit Price</th>--}}
+                        {{--                                        <th>Description</th>--}}
+                        {{--                                        <th>Total Price</th>--}}
+                        {{--                                        <th>Action</th>--}}
+                        {{--                                    </tr>--}}
+                        {{--                                    </thead>--}}
+                        {{--                                    <tbody id="addRow" class="addRow">--}}
+                        {{--                                    <tr>--}}
+                        {{--                                        <td colspan="5"></td>--}}
+                        {{--                                        <td>--}}
+                        {{--                                            <input type="text" name="estimated_amount" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">--}}
+                        {{--                                        </td>--}}
+                        {{--                                        <td></td>--}}
+                        {{--                                    </tr>--}}
+                        {{--                                    </tbody>--}}
 
-                                </table>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-info" id="storeButton">Purchase Store</button>
-                                </div>
+                        {{--                                </table>--}}
+                        {{--                                <div class="form-group">--}}
+                        {{--                                    <button type="submit" class="btn btn-info" id="storeButton">Purchase Store</button>--}}
+                        {{--                                </div>--}}
 
-                            </form>
-                        </div>
+                        {{--                            </form>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -168,7 +193,7 @@
 
     <script>
         $(document).ready(function(){
-           $(document).on('click','.addeventmore',function(){
+            $(document).on('click','.addeventmore',function(){
                 var date = $("#date").val();
                 var purchase_no = $("#purchase_no").val();
                 var supplier_id = $("#supplier_id").val();
@@ -199,9 +224,44 @@
                     return false;
                 }
 
-                var source = $("document-template").html();
+                var source = $("#document-template").html();
                 var template = Handlebars.compile(source);
-           });
+                var data = {
+                    date:date,
+                    purchase_no:purchase_no,
+                    supplier_id:supplier_id,
+                    category_id:category_id,
+                    category_name:category_name,
+                    product_id:product_id,
+                    product_name:product_name
+                };
+                var html = template(data);
+                $("#addRow").append(html);
+            });
+            $(document).on('click','.removeeventmore',function(event){
+                $(this).closest(".delete_add_more_item").remove();
+                totalAmountPrice();
+            });
+            $(document).on('keyup click','.unit_price,.buying_quantity',function(){
+                var unit_price = $(this).closest('tr').find('input.unit_price').val();
+                var qty = $(this).closest('tr').find('input.buying_quantity').val();
+                var total = unit_price * qty;
+                $(this).closest('tr').find('input.buying_price').val(total);
+                totalAmountPrice();
+            });
+
+            // calculate sum of amount in invoice......
+            function totalAmountPrice()
+            {
+                var sum = 0;
+                $('.buying_price').each(function(){
+                    var value = $(this).val();
+                    if(!isNaN(value) && value.length != 0){
+                        sum += parseFloat(value);
+                    }
+                });
+                $('#estimated_amount').val(sum);
+            }
         });
     </script>
 
@@ -210,42 +270,42 @@
     <script>
         $(function(){
             $(document).on('change','#supplier_id',function(){
-               var supplier_id = $(this).val();
-               // alert(supplier_id);
-               $.ajax({
-                  url: "{{ route('get_category') }}",
-                   type:'get',
-                   data:{supplier_id:supplier_id},
-                   success:function(data){
-                      var html = '<option value="">Select Category</option>';
-                      $.each(data,function(key,value){
-                          html += '<option value=" '+value.category_id+' ">'+value.category.name+'</option>';
-                      });
-                      $("#category_id").html(html);
-                   }
-               });
+                var supplier_id = $(this).val();
+                // alert(supplier_id);
+                $.ajax({
+                    url: "{{ route('get_category') }}",
+                    type:'get',
+                    data:{supplier_id:supplier_id},
+                    success:function(data){
+                        var html = '<option value="">Select Category</option>';
+                        $.each(data,function(key,value){
+                            html += '<option value=" '+value.category_id+' ">'+value.category.name+'</option>';
+                        });
+                        $("#category_id").html(html);
+                    }
+                });
             });
         });
     </script>
 
     <script>
-       $(function () {
-           $(document).on('change','#category_id',function(){
-              var category_id = $(this).val();
-              $.ajax({
-                 url:"{{ route('get_product') }}",
-                 type:'get',
-                 data:{category_id:category_id},
-                 success:function(data){
-                     var html = '<option value="">Select Product</option>';
-                     $.each(data,function(key,value){
-                        html += '<option value=" '+value.id+' ">'+value.name+'</option>';
-                     });
-                     $("#product_id").html(html);
-                 }
-              });
-           });
-       });
+        $(function () {
+            $(document).on('change','#category_id',function(){
+                var category_id = $(this).val();
+                $.ajax({
+                    url:"{{ route('get_product') }}",
+                    type:'get',
+                    data:{category_id:category_id},
+                    success:function(data){
+                        var html = '<option value="">Select Product</option>';
+                        $.each(data,function(key,value){
+                            html += '<option value=" '+value.id+' ">'+value.name+'</option>';
+                        });
+                        $("#product_id").html(html);
+                    }
+                });
+            });
+        });
     </script>
 @endsection
 

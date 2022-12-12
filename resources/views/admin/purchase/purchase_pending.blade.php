@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('title','All Purchase')
+@section('title','Pending Purchase')
 @section('admin')
 
     <div class="page-content">
@@ -9,11 +9,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title text-center">Purchase All Data </h4>
+                            <h4 class="card-title text-center">Pending Purchase Data </h4>
                         </div>
                         <div class="card-body">
 
-                            <a href="{{ route('purchase.create') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;">Add Purchase </a> <br>  <br>
+                            <a href="{{ route('purchase.index') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;">All Purchase </a> <br>  <br>
 
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -34,29 +34,25 @@
 
                                 <tbody>
 
-                                @foreach($purchases as $key => $purchase)
+                                @foreach($purchasePendings as $key => $purchasePending)
                                     <tr>
                                         <td> {{ ++$key}} </td>
-                                        <td> {{ $purchase->purchase_no }} </td>
-                                        <td> {{ date('d-m-Y',strtotime($purchase->date)) }} </td>
-                                        <td> {{ $purchase->supplier->name }}</td>
-                                        <td>{{ $purchase->category->name }}</td>
-                                        <td>{{ $purchase->product->name }}</td>
-                                        <td>{{ $purchase->buying_quantity }}</td>
+                                        <td> {{ $purchasePending->purchase_no }} </td>
+                                        <td> {{ date('d-m-Y',strtotime($purchasePending->date)) }} </td>
+                                        <td> {{ $purchasePending->supplier->name }}</td>
+                                        <td>{{ $purchasePending->category->name }}</td>
+                                        <td>{{ $purchasePending->product->name }}</td>
+                                        <td>{{ $purchasePending->buying_quantity }}</td>
                                         <td>
-                                            @if( $purchase->status==0)
+                                            @if( $purchasePending->status==0)
                                                 <span class="btn btn-warning">Pending</span>
                                             @else
                                                 <span class="btn btn-success">Approved</span>
                                             @endif
                                         </td>
                                         <td>
-                                            @if($purchase->status == 0)
-                                                <form action="{{ route('purchase.destroy',$purchase->id) }}" id="form_select" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger" title="Delete Data"> <i class="fas fa-trash-alt"></i> </button>
-                                                </form>
+                                            @if($purchasePending->status == '0')
+                                                <a href="{{ route('purchase.approved',$purchasePending->id) }}" class="btn btn-danger sm" title="Approved" id="ApproveBtn">  <i class="fas fa-check-circle"></i> </a>
                                             @else
 
                                             @endif
@@ -80,6 +76,7 @@
 
 
 @endsection
+
 
 
 

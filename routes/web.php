@@ -41,6 +41,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
     Route::resource('purchase',PurchaseController::class);
+    Route::get('pending/purchase',[PurchaseController::class,'PurchasePending'])->name('purchase.pending');
+    Route::get('approved/purchase/{id}',[PurchaseController::class,'PurchaseApproved'])->name('purchase.approved');
 
     //Default Controller route....
     Route::get('category_data/ajax',[DefaultController::class,'getCategoryDataByAjax'])->name('get_category');
