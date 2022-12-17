@@ -10,6 +10,7 @@ use App\Http\Controllers\POS\CategoryController;
 use App\Http\Controllers\POS\ProductController;
 use App\Http\Controllers\POS\PurchaseController;
 use App\Http\Controllers\POS\DefaultController;
+use App\Http\Controllers\POS\InvoiceController;
 
 
 Route::get('/', function () {
@@ -47,6 +48,13 @@ Route::group(['middleware'=>'auth'],function(){
     //Default Controller route....
     Route::get('category_data/ajax',[DefaultController::class,'getCategoryDataByAjax'])->name('get_category');
     Route::get('product_data/ajax',[DefaultController::class,'getProductDataByAjax'])->name('get_product');
+
+    //invoice controller route....
+    Route::controller(InvoiceController::class)->group(function (){
+       Route::prefix('invoice')->group(function (){
+         Route::get('all','AllInvoice')->name('invoice_all');
+       });
+    });
 });
 
 

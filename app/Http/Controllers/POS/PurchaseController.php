@@ -48,7 +48,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->category_id == null){
+        if($request->category_id === null){
             $notification=[
               'alert-type'=>'warning',
               'message'=>'you do not select any item'
