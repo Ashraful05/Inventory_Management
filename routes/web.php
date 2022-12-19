@@ -48,11 +48,17 @@ Route::group(['middleware'=>'auth'],function(){
     //Default Controller route....
     Route::get('category_data/ajax',[DefaultController::class,'getCategoryDataByAjax'])->name('get_category');
     Route::get('product_data/ajax',[DefaultController::class,'getProductDataByAjax'])->name('get_product');
+    Route::get('check_product_stock/ajax',[DefaultController::class,'checkProductStockByAjax'])->name('check_product_stock');
 
     //invoice controller route....
     Route::controller(InvoiceController::class)->group(function (){
        Route::prefix('invoice')->group(function (){
          Route::get('all','AllInvoice')->name('invoice_all');
+         Route::get('create','CreateInvoice')->name('invoice_create');
+         Route::post('save','SaveInvoice')->name('invoice_save');
+         Route::get('edit/{id}','EditInvoice')->name('invoice_edit');
+         Route::post('update/{id}','UpdateInvoice')->name('invoice_update');
+         Route::get('delete/{id}','DeleteInvoice')->name('invoice_delete');
        });
     });
 });

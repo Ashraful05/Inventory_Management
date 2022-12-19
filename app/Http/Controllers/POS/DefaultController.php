@@ -24,4 +24,10 @@ class DefaultController extends Controller
         $productData = Product::where('category_id',$category_id)->get();
         return response()->json($productData);
     }
+    public function checkProductStockByAjax(Request $request)
+    {
+        $productId = $request->product_id;
+        $stock = Product::where('id',$productId)->first()->quantity;
+        return response()->json($stock);
+    }
 }
