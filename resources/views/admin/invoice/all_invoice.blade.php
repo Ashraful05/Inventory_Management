@@ -24,7 +24,7 @@
                                     <th>Invoice No </th>
                                     <th>Date </th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    <th>Amount</th>
 
                                 </thead>
 
@@ -34,15 +34,11 @@
                                 @foreach($allData as $key => $item)
                                     <tr>
                                         <td> {{ $key+1}} </td>
-                                        <td> {{ $item->customer->name }} </td>
+                                        <td> {{ $item['payment']['customer']['name'] }} </td>
                                         <td> {{ $item->invoice_no }} </td>
                                         <td> {{ date('d-m-Y',strtotime($item->date)) }} </td>
                                         <td> {{ $item->description }} </td>
-                                        <td>
-                                            <a href="{{ route('invoice_edit',$item->id) }}" class="btn btn-info sm" title="Edit Data">  <i class="fas fa-edit"></i> </a>
-                                            <a href="{{ route('invoice_delete',$item->id) }}" class="btn btn-info sm" title="Delete Data">  <i class="fas fa-edit"></i> </a>
-
-                                        </td>
+                                        <td>{{ $item->payment->total_amount }}</td>
 
                                     </tr>
                                 @endforeach

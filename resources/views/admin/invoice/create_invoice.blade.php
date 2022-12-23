@@ -19,8 +19,8 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="md-3">
-                                            <label for="example-text-input" class="form-label">Invoice No</label>
-                                            <input class="form-control example-date-input" name="invoice_no" value="{{ $invoiceNo }}"
+                                            <label for="example-text-input" class="form-label">Invoice No. Id</label>
+                                            <input class="form-control example-date-input" name="invoice_no_id" value="{{ $invoiceNo }}"
                                                    type="text" id="invoice_no" readonly style="background-color: #ddd;">
                                         </div>
                                     </div>
@@ -87,13 +87,13 @@
                                     <tr>
                                         <td colspan="4">Discount Amount</td>
                                         <td>
-                                            <input type="text" name="discount_amount" id="discount_amount" class="form-control discount_amount" placeholder="Discount Amount">
+                                            <input type="text" name="discount_amount" value="{{ old('discount_amount') }}" id="discount_amount" class="form-control discount_amount" placeholder="Discount Amount">
                                         </td>
                                     </tr>
                                         <tr>
                                             <td colspan="4">Grand Total</td>
                                             <td>
-                                                <input type="text" name="estimated_amount" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">
+                                                <input type="text" name="estimated_amount" value="{{ old('estimated_amount') }}" id="estimated_amount" class="form-control estimated_amount" readonly style="background-color: #ddd;">
                                             </td>
                                             <td></td>
                                         </tr>
@@ -109,18 +109,18 @@
                                     <div class="form-group col-md-3">
                                         <label>Paid Status</label>
                                         <select name="paid_status" id="paid_status" class="form-select">
-                                            <option value="">Select Status</option>
+                                            <option value="" selected disabled>Select Status</option>
                                             <option value="full_paid">Full Paid</option>
                                             <option value="full_due">Full Due</option>
                                             <option value="partial_paid">Partial Paid</option>
                                         </select>
-                                        <input type="text" name="paid_amount" id="paid_amount" class="form-control mt-2 paid_amount"
+                                        <input type="text" name="paid_amount"  id="paid_amount" class="form-control mt-2 paid_amount"
                                                placeholder="Enter Partial Amount" style="display: none;">
                                     </div>
                                     <div class="form-group col-md-9">
                                         <label for="">Customer Name</label>
                                         <select name="customer_id" id="customer_id" class="form-select">
-                                            <option value="" disabled>Select Customer</option>
+                                            <option value="" selected disabled>Select Customer</option>
                                             @foreach($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->name }}:  {{ $customer->mobile_no }}</option>
                                             @endforeach
@@ -159,7 +159,7 @@
     <script type="text/x-handlebars-template" id="document-template">
         <tr class="delete_add_more_item" id="delete_add_more_item">
             <input type="hidden" name="date" value="@{{ date }}">
-            <input type="hidden" name="invoice_no[]" value="@{{ invoice_no }}">
+            <input type="text" name="invoice_no_id" value="@{{ invoice_no_id }}">
             <td>
                 <input type="hidden" name="category_id[]" value="@{{ category_id }}">
                 @{{ category_name }}
