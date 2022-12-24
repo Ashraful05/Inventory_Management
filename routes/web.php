@@ -56,6 +56,7 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('all','AllInvoice')->name('invoice_all');
          Route::get('create','CreateInvoice')->name('invoice_create');
          Route::post('save','SaveInvoice')->name('invoice_save');
+         Route::get('pending/list','InvoicePendingList')->name('invoice_pending_list');
          Route::get('edit/{id}','EditInvoice')->name('invoice_edit');
          Route::post('update/{id}','UpdateInvoice')->name('invoice_update');
          Route::get('delete/{id}','DeleteInvoice')->name('invoice_delete');
