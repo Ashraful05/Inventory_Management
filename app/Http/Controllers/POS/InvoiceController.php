@@ -199,7 +199,7 @@ class InvoiceController extends Controller
           'message'=>'Invoice Approve Successfully!!',
             'alert-type'=>'success'
         ];
-        return redirect()->route('invoice_pending_list')->with($notification);
+        return redirect()->route('invoice_all')->with($notification);
     }
 
 }

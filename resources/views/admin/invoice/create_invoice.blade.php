@@ -172,7 +172,7 @@
                 <input type="number" min="1" class="form-control selling_quantity text-right" name="selling_quantity[]" value="">
             </td>
             <td>
-                <input type="t" min="1" class="form-control unit_price text-right" name="unit_price[]" step="0.01">
+                <input type="number" min="1" class="form-control unit_price text-right" name="unit_price[]" step="0.01">
             </td>
             <td>
                 <input type="number" class="form-control selling_price text-right" name="selling_price" value="0" readonly>

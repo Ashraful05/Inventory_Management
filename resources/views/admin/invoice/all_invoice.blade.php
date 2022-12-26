@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('title','Approve Invoice List')
+@section('title','Approved Invoice List')
 @section('admin')
 
     <div class="page-content">

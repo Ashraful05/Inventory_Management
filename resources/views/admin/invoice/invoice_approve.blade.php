@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('title','Approved Invoice List')
+@section('title','Invoice Approval Page')
 @section('admin')
     <div class="page-content">
         <div class="container-fluid">
@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-header">
                             <a href="{{ route('invoice_pending_list') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;"><i class="fas fa-list-alt"> View All Pending Inovice </i></a>
-                            <h4 class="card-title text-center">Approved Inovice List </h4>
+                            <h4 class="card-title text-center"> Invoice Approval Page </h4>
                         </div>
                         <div class="card-body">
                             <h4>Invoice No: #{{ $invoice->invoice_no }} - ({{ date('d-m-Y',strtotime($invoice->date)) }})</h4>
