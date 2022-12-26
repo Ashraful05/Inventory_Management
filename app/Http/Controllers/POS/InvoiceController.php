@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -148,6 +149,11 @@ class InvoiceController extends Controller
         $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status',0)->get();
         return view('admin.invoice.invoice_pending_list',compact('allData'));
     }
+    public function InvoiceApprove($id)
+    {
+        $invoice = Invoice::with('invoiceDetail')->findOrFail($id);
+        return view('admin.invoice.invoice_approve',compact('invoice'));
+    }
     public function DeleteInvoice($id)
     {
         $invoice = Invoice::findOrFail($id);
@@ -161,4 +167,39 @@ class InvoiceController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+    public function SaveApprovedInvoice(Request $request,$id)
+    {
+        foreach ($request->selling_quantity as $row=>$value) {
+            $invoiceDetails = InvoiceDetail::where('id', $row)->first();
+            $product = Product::where('id', $invoiceDetails->product_id)->first();
+            if ($product->quantity < $request->selling_quantity[$row])
+            {
+                $notification = [
+                    'alert-type' => 'error',
+                    'message' => 'Sorry you approve Maximum Value'
+                ];
+                return redirect()->back()->with($notification);
+            }
+        }
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->updated_by = Auth::user()->id;
+        $invoice->status = 1;
+
+        DB::transaction(function () use($request,$invoice,$id){
+           foreach ($request->selling_quantity as $row => $value){
+               $invoiceDetails = InvoiceDetail::where('id',$row)->first();
+               $product = Product::where('id',$invoiceDetails->product_id)->first();
+               $product->quantity = ((float)$product->quantity) - ((float)$request->selling_quantity[$row]);
+               $product->save();
+           }
+           $invoice->save();
+        });
+        $notification = [
+          'message'=>'Invoice Approve Successfully!!',
+            'alert-type'=>'success'
+        ];
+        return redirect()->route('invoice_pending_list')->with($notification);
+    }
+
 }

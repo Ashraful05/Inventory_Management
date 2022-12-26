@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('title','Invoice Pending List')
+@section('title','Pending Invoice List')
 @section('admin')
     <div class="page-content">
         <div class="container-fluid">
@@ -7,8 +7,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('invoice_create') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;"><i class="fas fa-plus-circle"> Add Inovice </i></a>
-                            <h4 class="card-title text-center">Pending Inovice Data </h4>
+                            <a href="{{ route('invoice_all') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;"><i class="fas fa-plus-circle"> View All Inovice </i></a>
+                            <h4 class="card-title text-center">Pending Inovice List </h4>
                         </div>
                         <div class="card-body">
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -48,7 +48,7 @@
 
                                         <td>
                                             @if($item->status == '0')
-                                                <a href="#" class="btn btn-dark sm" title="Approved Data" >  <i class="fas fa-check-circle"></i> </a>
+                                                <a href="{{ route('invoice_approve',$item->id) }}" class="btn btn-dark sm" title="Approved Data" >  <i class="fas fa-check-circle"></i> </a>
 
                                                 <a href="{{ route('invoice_delete',$item->id) }}" class="btn btn-danger sm" title="Delete Data" id="delete">  <i class="fas fa-trash-alt"></i> </a>
                                             @endif

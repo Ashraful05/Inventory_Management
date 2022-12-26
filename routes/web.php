@@ -57,9 +57,9 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('create','CreateInvoice')->name('invoice_create');
          Route::post('save','SaveInvoice')->name('invoice_save');
          Route::get('pending/list','InvoicePendingList')->name('invoice_pending_list');
-         Route::get('edit/{id}','EditInvoice')->name('invoice_edit');
-         Route::post('update/{id}','UpdateInvoice')->name('invoice_update');
+         Route::get('approve/{id}','InvoiceApprove')->name('invoice_approve');
          Route::get('delete/{id}','DeleteInvoice')->name('invoice_delete');
+         Route::post('approve/save/{id}','SaveApprovedInvoice')->name('invoice_approve_save');
        });
     });
 });

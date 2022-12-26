@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('title','All Invoice')
+@section('title','Approve Invoice List')
 @section('admin')
 
     <div class="page-content">
@@ -10,7 +10,7 @@
                     <div class="card">
                         <div class="card-header">
                             <a href="{{ route('invoice_create') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;"><i class="fas fa-plus-circle"></i> Add Invoice </a>
-                            <h4 class="card-title text-center">Invoice All Data </h4>
+                            <h4 class="card-title text-center">Approved Invoice List </h4>
                         </div>
                         <div class="card-body">
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
