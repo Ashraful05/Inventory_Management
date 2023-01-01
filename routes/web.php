@@ -60,6 +60,8 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('approve/{id}','InvoiceApprove')->name('invoice_approve');
          Route::get('delete/{id}','DeleteInvoice')->name('invoice_delete');
          Route::post('approve/save/{id}','SaveApprovedInvoice')->name('invoice_approve_save');
+         Route::get('printing/list','InvoicePrintingList')->name('print_invoice_list');
+         Route::get('print/{id}','InvoicePrintById')->name('print_by_id');
        });
     });
 });

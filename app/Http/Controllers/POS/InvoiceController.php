@@ -13,6 +13,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\In;
 
 class InvoiceController extends Controller
 {
@@ -201,5 +202,16 @@ class InvoiceController extends Controller
         ];
         return redirect()->route('invoice_all')->with($notification);
     }
+    public function InvoicePrintingList()
+    {
+        $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status',1)->get();
+        return view('admin.invoice.print_invoice_list',compact('allData'));
+    }
+    public function InvoicePrintById($id)
+    {
+        $invoice = Invoice::with('invoiceDetail')->findOrFail($id);
+        return view('admin.pdf.invoice_pdf',compact('invoice'));
+    }
+
 
 }
