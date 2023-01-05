@@ -40,7 +40,6 @@
                                         <td>
                                             <a href="{{ route('print_by_id',$item->id) }}" title="Print Invoice" class="btn btn-danger btn-sm"><i class="fas fa-print"></i></a>
                                         </td>
-
                                     </tr>
                                 @endforeach
 

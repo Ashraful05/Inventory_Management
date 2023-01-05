@@ -62,6 +62,9 @@ Route::group(['middleware'=>'auth'],function(){
          Route::post('approve/save/{id}','SaveApprovedInvoice')->name('invoice_approve_save');
          Route::get('printing/list','InvoicePrintingList')->name('print_invoice_list');
          Route::get('print/{id}','InvoicePrintById')->name('print_by_id');
+         Route::get('daily/report','InvoiceDailyReport')->name('invoice_daily_report');
+         Route::get('daily/report/pdf','InvoiceDailyReportPDF')->name('daily_invoice_report_pdf');
+
        });
     });
 });
