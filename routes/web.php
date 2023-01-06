@@ -11,6 +11,7 @@ use App\Http\Controllers\POS\ProductController;
 use App\Http\Controllers\POS\PurchaseController;
 use App\Http\Controllers\POS\DefaultController;
 use App\Http\Controllers\POS\InvoiceController;
+use App\Http\Controllers\POS\StockController;
 
 
 Route::get('/', function () {
@@ -64,7 +65,13 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('print/{id}','InvoicePrintById')->name('print_by_id');
          Route::get('daily/report','InvoiceDailyReport')->name('invoice_daily_report');
          Route::get('daily/report/pdf','InvoiceDailyReportPDF')->name('daily_invoice_report_pdf');
+       });
+    });
 
+    Route::controller(StockController::class)->group(function (){
+       Route::prefix('stock')->group(function (){
+         Route::get('report','StockReport')->name('stock_report');
+         Route::get('report/pdf','StockReportPDF')->name('stock_report_pdf');
        });
     });
 });

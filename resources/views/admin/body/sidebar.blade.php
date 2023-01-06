@@ -83,6 +83,17 @@
                                     <li><a href="{{ route('invoice_daily_report') }}">Daily Invoice Report</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="ri-mail-send-line"></i>
+                                    <span>Manage Stock</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('stock_report') }}">Stock Report</a></li>
+                                    <li><a href="#">Supplier/Product Wise Report</a></li>
+
+                                </ul>
+                            </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
