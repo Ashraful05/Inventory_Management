@@ -74,6 +74,7 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('report/pdf','StockReportPDF')->name('stock_report_pdf');
          Route::get('report/supplier-product-wise','SupplierProductWiseStockReport')->name('supplier_product_wise_report');
          Route::get('report/supplier-wise-pdf','SupplierWiseStockReportPDF')->name('supplier_wise_pdf_report');
+         Route::get('report/product-wise-pdf','ProductWiseStockReportPDF')->name('product_wise_pdf_report');
        });
     });
 });

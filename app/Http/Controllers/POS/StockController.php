@@ -38,4 +38,9 @@ class StockController extends Controller
             ->get();
         return view('admin.pdf.supplier_wise_pdf_report',compact('allData'));
     }
+    public function ProductWiseStockReportPDF(Request $request)
+    {
+        $product = Product::where(['category_id'=>$request->category_id,'id'=>$request->product_id])->first();
+        return view('admin.pdf.product_wise_pdf_report',compact('product'));
+    }
 }
