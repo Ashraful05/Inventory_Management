@@ -24,17 +24,25 @@
                                     <th>Unit</th>
                                     <th>Category</th>
                                     <th>Product Name</th>
+                                    <th>In Qty</th>
+                                    <th>Out Qty </th>
                                     <th>Stock </th>
                                 </thead>
                                 <tbody>
                                 @foreach($allData as $key => $item)
+                                    @php
+                                        $buyingTotal = \App\Models\Purchase::where(['category_id'=>$item->category_id,'product_id'=>$item->id,'status'=>1])->sum('buying_quantity');
+                                        $sellingTotal = \App\Models\InvoiceDetail::where(['category_id'=>$item->category_id,'product_id'=>$item->id,'status'=>1])->sum('selling_quantity');
+                                    @endphp
                                     <tr>
                                         <td> {{ ++$key}} </td>
                                         <td> {{ $item['supplier']['name'] }} </td>
                                         <td> {{ $item['unit']['name'] }} </td>
                                         <td> {{ $item['category']['name'] }} </td>
                                         <td> {{ $item->name }} </td>
-                                        <td> {{ $item->quantity }} </td>
+                                        <td><span class="btn btn-success">{{ $buyingTotal }}</span></td>
+                                        <td><span class="btn btn-info">{{ $sellingTotal }}</span></td>
+                                        <td><span class="btn btn-danger">{{ $item->quantity }}</span></td>
                                     </tr>
                                 @endforeach
 
