@@ -45,6 +45,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('purchase',PurchaseController::class);
     Route::get('pending/purchase',[PurchaseController::class,'PurchasePending'])->name('purchase.pending');
     Route::get('approved/purchase/{id}',[PurchaseController::class,'PurchaseApproved'])->name('purchase.approved');
+    Route::get('purchase_daily_report',[PurchaseController::class,'dailyPurchaseReport'])->name('purchase.daily.report');
+    Route::get('purchase_daily_report_pdf',[PurchaseController::class,'dailyPurchaseReportPDF'])->name('purchase.daily_report_pdf');
 
     //Default Controller route....
     Route::get('category_data/ajax',[DefaultController::class,'getCategoryDataByAjax'])->name('get_category');
