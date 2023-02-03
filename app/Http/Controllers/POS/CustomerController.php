@@ -4,6 +4,7 @@ namespace App\Http\Controllers\POS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -177,5 +178,16 @@ class CustomerController extends Controller
 
         return redirect()->route('customer.index')->with($notification);
 
+    }
+    public function CustomerCreditReport()
+    {
+        $allData = Payment::whereIn('paid_status',['full_due','partial_paid'])->get();
+        return view('admin.customer.credit_customer',compact('allData'));
+    }
+
+    public function CustomerCreditReportPDF()
+    {
+        $allData = Payment::whereIn('paid_status',['full_due','partial_paid'])->get();
+        return view('admin.pdf.credit_customer_pdf',compact('allData'));
     }
 }

@@ -79,6 +79,11 @@ Route::group(['middleware'=>'auth'],function(){
          Route::get('report/product-wise-pdf','ProductWiseStockReportPDF')->name('product_wise_pdf_report');
        });
     });
+
+    Route::prefix('customer/credit')->group(function(){
+       Route::get('report',[CustomerController::class,'CustomerCreditReport'])->name('customer.credit.report');
+       Route::get('report/pdf',[CustomerController::class,'CustomerCreditReportPDF'])->name('customer.credit.report.pdf');
+    });
 });
 
 
