@@ -34,6 +34,7 @@
                                     <th>Invoice No </th>
                                     <th>Date</th>
                                     <th>Due Amount</th>
+                                    <th>Action</th>
                                 </thead>
 
 
@@ -46,6 +47,7 @@
                                         <td> #{{ $item['invoice']['invoice_no'] }}   </td>
                                         <td> {{  date('d-m-Y',strtotime($item['invoice']['date'])) }} </td>
                                         <td> {{ $item->due_amount }} </td>
+                                        <td><a href="{{ route('customer.edit.invoice',$item->invoice_id) }}"class="btn btn-info sm" title="Edit Data">  <i class="fas fa-edit"></i></a></td>
                                     </tr>
                                 @endforeach
 

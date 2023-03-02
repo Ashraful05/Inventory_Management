@@ -80,9 +80,11 @@ Route::group(['middleware'=>'auth'],function(){
        });
     });
 
-    Route::prefix('customer/credit')->group(function(){
-       Route::get('report',[CustomerController::class,'CustomerCreditReport'])->name('customer.credit.report');
-       Route::get('report/pdf',[CustomerController::class,'CustomerCreditReportPDF'])->name('customer.credit.report.pdf');
+    Route::prefix('customer')->group(function(){
+       Route::get('credit/report',[CustomerController::class,'CustomerCreditReport'])->name('customer.credit.report');
+       Route::get('credit/report/pdf',[CustomerController::class,'CustomerCreditReportPDF'])->name('customer.credit.report.pdf');
+       Route::get('edit/invoice/{invoice_id}',[CustomerController::class,'CustomerEditInvoice'])->name('customer.edit.invoice');
+       Route::post('update/invoice/{invoice_id}',[CustomerController::class,'CustomerUpdateInvoice'])->name('customer.update.invoice');
     });
 });
 
