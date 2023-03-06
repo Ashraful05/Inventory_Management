@@ -233,4 +233,9 @@ class CustomerController extends Controller
         }
 
     }
+    public function CustomerInvoiceDetailsPDF($invoice_id)
+    {
+        $payment = Payment::where('invoice_id',$invoice_id)->first();
+        return view('admin.pdf.customer_invoice_details_pdf',compact('payment'));
+    }
 }

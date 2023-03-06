@@ -85,6 +85,7 @@ Route::group(['middleware'=>'auth'],function(){
        Route::get('credit/report/pdf',[CustomerController::class,'CustomerCreditReportPDF'])->name('customer.credit.report.pdf');
        Route::get('edit/invoice/{invoice_id}',[CustomerController::class,'CustomerEditInvoice'])->name('customer.edit.invoice');
        Route::post('update/invoice/{invoice_id}',[CustomerController::class,'CustomerUpdateInvoice'])->name('customer.update.invoice');
+       Route::get('invoice/details/pdf/{invoice_id}',[CustomerController::class,'CustomerInvoiceDetailsPDF'])->name('customer.invoice.details');
     });
 });
 

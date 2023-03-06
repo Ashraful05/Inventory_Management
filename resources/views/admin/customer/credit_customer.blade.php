@@ -47,7 +47,10 @@
                                         <td> #{{ $item['invoice']['invoice_no'] }}   </td>
                                         <td> {{  date('d-m-Y',strtotime($item['invoice']['date'])) }} </td>
                                         <td> {{ $item->due_amount }} </td>
-                                        <td><a href="{{ route('customer.edit.invoice',$item->invoice_id) }}"class="btn btn-info sm" title="Edit Data">  <i class="fas fa-edit"></i></a></td>
+                                        <td>
+                                            <a href="{{ route('customer.edit.invoice',$item->invoice_id) }}"class="btn btn-info sm" title="Edit Data">  <i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('customer.invoice.details',$item->invoice_id) }}" class="btn btn-danger sm" title="Details Data"><i class="fas fa-eye"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
 
