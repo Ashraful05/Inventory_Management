@@ -33,6 +33,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('customer.index') }}">All Customer</a></li>
                                     <li><a href="{{ route('customer.credit.report') }}">Customer Credit Report</a></li>
+                                    <li><a href="{{ route('customer.paid') }}">Paid Customer</a></li>
                                 </ul>
                             </li>
                             <li>

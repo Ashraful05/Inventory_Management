@@ -238,4 +238,16 @@ class CustomerController extends Controller
         $payment = Payment::where('invoice_id',$invoice_id)->first();
         return view('admin.pdf.customer_invoice_details_pdf',compact('payment'));
     }
+
+   public function PaidCustomer()
+   {
+       $allData = Payment::where('paid_status','!=','full_due')->get();
+//       return $allData;
+       return view('admin.customer.paid_customer',compact('allData'));
+   }
+   public function PaidCustomerPDF()
+   {
+       $allData = Payment::where('paid_status','!=','full_due')->get();
+       return view('admin.pdf.paid_customer_report_pdf',compact('allData'));
+   }
 }
