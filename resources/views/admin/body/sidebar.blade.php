@@ -34,6 +34,7 @@
                                     <li><a href="{{ route('customer.index') }}">All Customer</a></li>
                                     <li><a href="{{ route('customer.credit.report') }}">Customer Credit Report</a></li>
                                     <li><a href="{{ route('customer.paid') }}">Paid Customer</a></li>
+                                    <li><a href="{{ route('customer.wise.report') }}">Customer Wise Report</a></li>
                                 </ul>
                             </li>
                             <li>

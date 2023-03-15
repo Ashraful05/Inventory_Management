@@ -250,4 +250,30 @@ class CustomerController extends Controller
        $allData = Payment::where('paid_status','!=','full_due')->get();
        return view('admin.pdf.paid_customer_report_pdf',compact('allData'));
    }
+   public function CustomerWiseReport()
+   {
+       $customers = Customer::all();
+//       return $customers;
+       return view('admin.customer.customer_wise_report',compact('customers'));
+   }
+   public function CustomerWiseCreditReportPDF(Request $request)
+   {
+        $allData = Payment::where('customer_id',$request->customer_id)->whereIn('paid_status',['full_due','partial_paid'])->get();
+        if($request->customer_id == null){
+            $notification = [
+                'alert-type'=>'warning',
+                'message'=>'Please select customer name'
+            ];
+            return redirect()->back()->with($notification);
+        }
+        return view('admin.pdf.customer_wise_credit_report_pdf',compact('allData'));
+   }
+
+   public function CustomerWisePaidReportPDF(Request $request)
+   {
+       $allData = Payment::where('customer_id',$request->customer_id)->where('paid_status','!=','full_due')->get();
+//       return $allData;
+       return view('admin.pdf.customer_wise_paid_report_pdf',compact('allData'));
+   }
+
 }
